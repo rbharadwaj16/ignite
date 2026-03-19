@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: demo-app
+  labels:
+    app: demo-app
+    version: "0.4"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+        version: "0.4"
+    spec:
+      imagePullSecrets:
+      - name: acr-pull-secret
+      containers:
+      - name: demo-app
+        image: acepocdemoregistry.azurecr.io/demo-app:0.4
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
